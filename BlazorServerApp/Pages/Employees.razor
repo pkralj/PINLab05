@@ -1,0 +1,41 @@
+﻿@using BlazorServerApp.Services
+@using BlazorServerApp.Data
+
+
+@page "/employees"
+@inject EmployeesService employeesService
+<h1>Employees</h1>
+
+@if (employees != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FullName</th>
+                <th>Department</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in employees)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.FullName</td>
+                    <td>@employee.Department</td>
+                    <td>@employee.Salary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@using BlazorServerApp.Data
+@code {
+    List<Employee> employees;
+    protected override async Task OnInitializedAsync()
+    {
+        employees = employeesService.getAllEmployees();
+    }
+}
